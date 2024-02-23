@@ -125,7 +125,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         preferredSize: Size.fromHeight(0),
       ),
       body: SafeArea(
-        bottom: true,
         child: NotificationListener<ScrollNotification>(
           onNotification: _scrollListener,
           child: Container(

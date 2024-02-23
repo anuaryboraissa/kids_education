@@ -18,11 +18,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        AppBar(),
-        Body(),
-      ],
+    return Scaffold(
+      body: Column(
+          children: const [
+            AppBar(),
+            Body(),
+          ],
+        )
     );
   }
 }

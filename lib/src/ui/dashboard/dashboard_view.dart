@@ -70,7 +70,6 @@ class _DashboardViewState extends State<DashboardView>
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
         body: SafeArea(
-          bottom: true,
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Column(
