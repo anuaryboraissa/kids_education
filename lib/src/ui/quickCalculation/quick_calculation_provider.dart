@@ -8,16 +8,21 @@ class QuickCalculationProvider extends GameProvider<QuickCalculation> {
   late QuickCalculation nextCurrentState;
   QuickCalculation? previousCurrentState;
   final DifficultyType difficultyType;
-
+  final String newSign;
+  final String std;
   QuickCalculationProvider({
+    required this.newSign,
+    required this.std,
     required TickerProvider vsync,
     required this.difficultyType,
   }) : super(
           vsync: vsync,
+          newSign: newSign,
+          std: std,
           gameCategoryType: GameCategoryType.QUICK_CALCULATION,
           difficultyType: difficultyType,
         ) {
-    startGame();
+    startGame(newSign);
     nextCurrentState = list[index + 1];
   }
 
@@ -28,7 +33,7 @@ class QuickCalculationProvider extends GameProvider<QuickCalculation> {
       notifyListeners();
       if (int.parse(result) == currentState.answer) {
         await Future.delayed(Duration(milliseconds: 300));
-        loadNewDataIfRequired();
+        loadNewDataIfRequired(newSign);
         previousCurrentState = list[index - 1];
         nextCurrentState = list[index + 1];
         if (/*time >= 0.0125*/ timerStatus != TimerStatus.pause) increase();

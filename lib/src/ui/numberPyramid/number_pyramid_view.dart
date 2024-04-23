@@ -15,7 +15,7 @@ import 'package:vsync_provider/vsync_provider.dart';
 import 'number_pyramid_button.dart';
 
 class NumberPyramidView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const NumberPyramidView({
     Key? key,
@@ -29,6 +29,8 @@ class NumberPyramidView extends StatelessWidget {
         const VsyncProvider(),
         ChangeNotifierProvider<NumberPyramidProvider>(
             create: (context) => NumberPyramidProvider(
+                  newSign: colorTuple.item4,
+                  std: colorTuple.item3,
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
                 ))
@@ -36,10 +38,12 @@ class NumberPyramidView extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-            appBar: CommonAppBar<NumberPyramidProvider>(colorTuple: colorTuple),
+            appBar: CommonAppBar<NumberPyramidProvider>(
+                colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
             body: SafeArea(
               bottom: true,
               child: DialogListener<NumberPyramidProvider>(
+                newSign: colorTuple.item4,
                 gameCategoryType: GameCategoryType.NUMBER_PYRAMID,
                 child: Container(
                   margin: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -64,7 +68,8 @@ class NumberPyramidView extends StatelessWidget {
                                     isLeftRadius: true,
                                     isRightRadius: true,
                                     height: constraints.maxWidth,
-                                    colorTuple: colorTuple,
+                                    colorTuple: Tuple2(
+                                        colorTuple.item1, colorTuple.item2),
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +80,8 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[26],
                                         isLeftRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
@@ -83,7 +89,8 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[25],
                                         isRightRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       )
                                     ],
                                   ),
@@ -96,14 +103,16 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[24],
                                         isLeftRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[23],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
@@ -111,7 +120,8 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[22],
                                         isRightRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                     ],
                                   ),
@@ -124,21 +134,24 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[21],
                                         isLeftRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[20],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[19],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
@@ -146,7 +159,8 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[18],
                                         isRightRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                     ],
                                   ),
@@ -159,28 +173,32 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[17],
                                         isLeftRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[16],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[15],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[14],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
@@ -188,7 +206,8 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[13],
                                         isRightRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                     ],
                                   ),
@@ -201,42 +220,48 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[12],
                                         isLeftRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[11],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[10],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[9],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[8],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[7],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                         isRightRadius: true,
                                       ),
                                     ],
@@ -250,42 +275,48 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[6],
                                         isLeftRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[5],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[4],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[3],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[2],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
                                             numberPyramidProvider
                                                 .currentState.list[1],
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                       PyramidNumberButton(
                                         numPyramidCellModel:
@@ -293,7 +324,8 @@ class NumberPyramidView extends StatelessWidget {
                                                 .currentState.list[0],
                                         isRightRadius: true,
                                         height: constraints.maxWidth,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(
+                                            colorTuple.item1, colorTuple.item2),
                                       ),
                                     ],
                                   ),
@@ -349,7 +381,8 @@ class NumberPyramidView extends StatelessWidget {
                                   } else {
                                     return CommonTextButton(
                                       text: e,
-                                      colorTuple: colorTuple,
+                                      colorTuple: Tuple2(
+                                          colorTuple.item1, colorTuple.item2),
                                       onTab: () {
                                         context
                                             .read<NumberPyramidProvider>()

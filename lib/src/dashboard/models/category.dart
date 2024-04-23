@@ -1,6 +1,6 @@
 
 import '../constants/icons.dart';
-
+import '../utils.dart';
 class Category {
   String thumbnail;
   String name;
@@ -15,22 +15,22 @@ class Category {
 
 List<Category> categoryList = [
   Category(
-    name: 'Addition',
+    name: additionOperation,
     noOfCourses: 55,
     thumbnail: imgAdd,
   ),
   Category(
-    name: 'Subtraction',
+    name: subtractionOperation,
     noOfCourses: 20,
     thumbnail: imgSub,
   ),
   Category(
-    name: 'Multiplication',
+    name: multiplicationOperation,
     noOfCourses: 16,
     thumbnail: imgMul,
   ),
   Category(
-    name: 'Division',
+    name: divisionOperation,
     noOfCourses: 25,
     thumbnail: imgDiv,
   ),

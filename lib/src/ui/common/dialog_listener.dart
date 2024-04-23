@@ -12,11 +12,12 @@ import 'package:provider/provider.dart';
 class DialogListener<T extends GameProvider> extends StatefulWidget {
   final Widget child;
   final GameCategoryType gameCategoryType;
+  final String newSign;
 
   const DialogListener({
     Key? key,
     required this.child,
-    required this.gameCategoryType,
+    required this.gameCategoryType, required this.newSign,
   }) : super(key: key);
 
   @override
@@ -49,7 +50,7 @@ class _DialogListenerState<T extends GameProvider>
         ).then((value) {
           if (value != null && value) {
             context.read<T>().updateScore();
-            context.read<T>().startGame();
+            context.read<T>().startGame(widget.newSign);
           } else {
             context.read<T>().updateScore();
             Navigator.pop(context);
@@ -90,7 +91,7 @@ class _DialogListenerState<T extends GameProvider>
               context.read<T>().pauseResumeGame();
             } else {
               context.read<T>().updateScore();
-              context.read<T>().startGame();
+              context.read<T>().startGame(widget.newSign);
             }
           } else {
             context.read<T>().updateScore();

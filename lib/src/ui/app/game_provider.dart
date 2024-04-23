@@ -18,6 +18,8 @@ import 'package:mathgame/src/data/repository/sign_repository.dart';
 
 class GameProvider<T> extends TimeProvider {
   final GameCategoryType gameCategoryType;
+  final String newSign;
+  final String std;
   final DifficultyType difficultyType;
   final _homeViewModel = GetIt.I<DashboardProvider>();
 
@@ -28,7 +30,9 @@ class GameProvider<T> extends TimeProvider {
   late T currentState;
   late String result;
 
-  GameProvider({
+  GameProvider( {
+    required this.std,
+    required this.newSign, 
     required TickerProvider vsync,
     required this.gameCategoryType,
     required this.difficultyType,
@@ -40,9 +44,9 @@ class GameProvider<T> extends TimeProvider {
           ),
         );
 
-  void startGame() async {
+  void startGame(String newSign) async {
     result = "";
-    list = getList(1);
+    list = getList(1,newSign);
     index = 0;
     currentScore = 0;
     oldScore = 0;
@@ -56,15 +60,15 @@ class GameProvider<T> extends TimeProvider {
     }
   }
 
-  void loadNewDataIfRequired() {
+  void loadNewDataIfRequired(String newSign) {
     if (gameCategoryType == GameCategoryType.QUICK_CALCULATION &&
         list.length - 2 == index) {
-      list.addAll(getList(index ~/ 5 + 1));
+      list.addAll(getList(index ~/ 5 + 1,newSign));
     } else if (list.length - 1 == index) {
       if (gameCategoryType == GameCategoryType.SQUARE_ROOT)
-        list.addAll(getList(index ~/ 5 + 2));
+        list.addAll(getList(index ~/ 5 + 2,newSign));
       else
-        list.addAll(getList(index ~/ 5 + 1));
+        list.addAll(getList(index ~/ 5 + 1,newSign));
     }
     result = "";
     index = index + 1;
@@ -120,7 +124,7 @@ class GameProvider<T> extends TimeProvider {
     if (_homeViewModel.isFirstTime(gameCategoryType)) {
       _homeViewModel.setFirstTime(gameCategoryType);
       if (gameCategoryType == GameCategoryType.MENTAL_ARITHMETIC) {
-        startGame();
+        startGame(newSign);
       }
       restartTimer();
     } else {
@@ -128,24 +132,24 @@ class GameProvider<T> extends TimeProvider {
     }
   }
 
-  List<T> getList(int level) {
+  List<T> getList(int level,String newSign) {
     switch (gameCategoryType) {
       case GameCategoryType.CALCULATOR:
-        return CalculatorRepository.getCalculatorDataList(level);
+        return CalculatorRepository.getCalculatorDataList(level,newSign);
       case GameCategoryType.GUESS_SIGN:
-        return SignRepository.getSignDataList(level);
+        return SignRepository.getSignDataList(level,newSign);
       case GameCategoryType.SQUARE_ROOT:
         return SquareRootRepository.getSquareDataList(level);
       case GameCategoryType.MATH_PAIRS:
         return MathPairsRepository.getMathPairsDataList(level);
       case GameCategoryType.CORRECT_ANSWER:
-        return CorrectAnswerRepository.getCorrectAnswerDataList(level);
+        return CorrectAnswerRepository.getCorrectAnswerDataList(level,newSign);
       case GameCategoryType.MAGIC_TRIANGLE:
         return MagicTriangleRepository.getTriangleDataProviderList();
       case GameCategoryType.MENTAL_ARITHMETIC:
         return MentalArithmeticRepository.getMentalArithmeticDataList(level);
       case GameCategoryType.QUICK_CALCULATION:
-        return QuickCalculationRepository.getQuickCalculationDataList(level, 5);
+        return QuickCalculationRepository.getQuickCalculationDataList(level, 5,newSign);
       case GameCategoryType.MATH_GRID:
         return MathGridRepository.getMathGridData(level);
       case GameCategoryType.PICTURE_PUZZLE:

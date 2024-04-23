@@ -8,16 +8,21 @@ import 'package:mathgame/src/ui/app/game_provider.dart';
 class MagicTriangleProvider extends GameProvider<MagicTriangle> {
   int selectedTriangleIndex = 0;
   final DifficultyType difficultyType;
-
+  final String newSign;
+  final String std;
   MagicTriangleProvider({
     required TickerProvider vsync,
     required this.difficultyType,
+    required this.newSign,
+    required this.std,
   }) : super(
+              newSign: newSign,
+          std: std,
           vsync: vsync,
           gameCategoryType: GameCategoryType.MAGIC_TRIANGLE,
           difficultyType: difficultyType,
         ) {
-    startGame();
+    startGame(newSign);
   }
 
   void inputTriangleSelection(int index, MagicTriangleInput input) {
@@ -59,7 +64,7 @@ class MagicTriangleProvider extends GameProvider<MagicTriangle> {
         // check if total of triangle is as per given answer
         if (currentState.checkTotal()) {
           await Future.delayed(Duration(milliseconds: 300));
-          loadNewDataIfRequired();
+          loadNewDataIfRequired(newSign);
           selectedTriangleIndex = 0;
 
           if (timerStatus != TimerStatus.pause) {

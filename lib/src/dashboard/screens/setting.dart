@@ -4,6 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mathgame/src/core/color_scheme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../chat/core/domain/services/auth_service.dart';
+import '../../../chat/features/chat/presentation/controllers/signout_controller.dart';
+import '../../../chat/injection_container.dart';
 import '../../core/app_assets.dart';
 import '../../ui/app/theme_provider.dart';
 
@@ -15,6 +18,25 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  String username = "";
+  getUserLogged() async {
+    getIt
+        .get<AuthService>()
+        .usersDS
+        .getPublicUser(uid: getIt.get<AuthService>().loggedUid.toString())
+        .then((value) {
+      setState(() {
+        username = "${value!.fullName}";
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getUserLogged();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -74,36 +96,36 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                       ),
-                      ListTile(
-                        onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => const NotificatioSetting(),
-                          // ));
-                        },
-                        leading: const Icon(Icons.notifications),
-                        title: const Text("Notifications"),
-                        subtitle: const Text("group,chats"),
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          size: 14,
-                        ),
-                      ),
-                      const Divider(),
-                      ListTile(
-                        onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => const StorageSetting(),
-                          // ));
-                        },
-                        leading: const Icon(Icons.storage),
-                        title: const Text("Storing data"),
-                        subtitle:
-                            const Text("network usage and auto downloads"),
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          size: 14,
-                        ),
-                      ),
+                      // ListTile(
+                      //   onTap: () {
+                      //     // Navigator.of(context).push(MaterialPageRoute(
+                      //     //   builder: (context) => const NotificatioSetting(),
+                      //     // ));
+                      //   },
+                      //   leading: const Icon(Icons.notifications),
+                      //   title: const Text("Notifications"),
+                      //   subtitle: const Text("group,chats"),
+                      //   trailing: const Icon(
+                      //     Icons.arrow_forward_ios_outlined,
+                      //     size: 14,
+                      //   ),
+                      // ),
+                      // const Divider(),
+                      // ListTile(
+                      //   onTap: () {
+                      //     // Navigator.of(context).push(MaterialPageRoute(
+                      //     //   builder: (context) => const StorageSetting(),
+                      //     // ));
+                      //   },
+                      //   leading: const Icon(Icons.storage),
+                      //   title: const Text("Storing data"),
+                      //   subtitle:
+                      //       const Text("network usage and auto downloads"),
+                      //   trailing: const Icon(
+                      //     Icons.arrow_forward_ios_outlined,
+                      //     size: 14,
+                      //   ),
+                      // ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Row(
@@ -116,85 +138,92 @@ class _SettingScreenState extends State<SettingScreen> {
                           ],
                         ),
                       ),
-                      ListTile(
-                        leading: const Icon(Icons.phone),
-                        title: const Text("Phone Number"),
-                        subtitle: Text("0734328981"),
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          size: 14,
-                        ),
-                      ),
-                      const Divider(),
+                   
                       ListTile(
                         leading: const Icon(Icons.mail),
-                        title: const Text("UserName"),
-                        subtitle: Text("Anuary"),
+                        title: const Text("Full Name"),
+                        subtitle: Text(username),
                         trailing: const Icon(
                           Icons.arrow_forward_ios_outlined,
                           size: 14,
                         ),
                       ),
+                      // const Divider(),
+                      // const ListTile(
+                      //   leading: Icon(Icons.delete),
+                      //   title: Text("Delete My Account"),
+                      //   subtitle: Text("this may delete your account"),
+                      //   trailing: Icon(
+                      //     Icons.arrow_forward_ios_outlined,
+                      //     size: 14,
+                      //   ),
+                      // ),
                       const Divider(),
-                      const ListTile(
-                        leading: Icon(Icons.delete),
-                        title: Text("Delete My Account"),
-                        subtitle: Text("this may delete your Tuchati account"),
+                      ListTile(
+                        onTap: () {
+                          final signOutController = SignOutController();
+                          signOutController.signOut(context);
+                        },
+                        leading: Icon(
+                          Icons.logout_outlined,
+                        ),
+                        title: Text("Sign Out"),
+                        subtitle: Text("This make you sign in again"),
                         trailing: Icon(
                           Icons.arrow_forward_ios_outlined,
                           size: 14,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Security",
-                              // style: AppColors.headingStyle
-                            ),
-                          ],
-                        ),
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.phonelink_lock_outlined),
-                        title: const Text("Lock app in background"),
-                        trailing: Switch(
-                            value: true,
-                            activeColor: Colors.redAccent,
-                            onChanged: (val) {
-                              setState(() {
-                                // lockAppSwitchVal = val;
-                              });
-                            }),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Misc",
-                              // style: AppColors.headingStyle
-                            ),
-                          ],
-                        ),
-                      ),
-                      const ListTile(
-                        leading: Icon(Icons.file_open_outlined),
-                        title: Text("Terms of Service"),
-                      ),
-                      const Divider(),
-                      const ListTile(
-                        leading: Icon(Icons.file_copy_outlined),
-                        title: Text("Open Source and Licences"),
-                      ),
-                      ListTile(
-                        onTap: () {},
-                        leading: Icon(Icons.help),
-                        title: Text("Help"),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 8.0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       Text(
+                      //         "Security",
+                      //         // style: AppColors.headingStyle
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // ListTile(
+                      //   leading: const Icon(Icons.phonelink_lock_outlined),
+                      //   title: const Text("Lock app in background"),
+                      //   trailing: Switch(
+                      //       value: true,
+                      //       activeColor: Colors.redAccent,
+                      //       onChanged: (val) {
+                      //         setState(() {
+                      //           // lockAppSwitchVal = val;
+                      //         });
+                      //       }),
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 8.0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       Text(
+                      //         "Misc",
+                      //         // style: AppColors.headingStyle
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const ListTile(
+                      //   leading: Icon(Icons.file_open_outlined),
+                      //   title: Text("Terms of Service"),
+                      // ),
+                      // const Divider(),
+                      // const ListTile(
+                      //   leading: Icon(Icons.file_copy_outlined),
+                      //   title: Text("Open Source and Licences"),
+                      // ),
+                      // ListTile(
+                      //   onTap: () {},
+                      //   leading: Icon(Icons.help),
+                      //   title: Text("Help"),
+                      // ),
                     ],
                   ),
                 ),

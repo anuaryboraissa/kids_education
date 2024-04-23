@@ -7,16 +7,21 @@ import 'package:mathgame/src/ui/app/game_provider.dart';
 
 class NumberPyramidProvider extends GameProvider<NumberPyramid> {
   final DifficultyType difficultyType;
-
+  final String newSign;
+  final String std;
   NumberPyramidProvider({
     required TickerProvider vsync,
     required this.difficultyType,
+        required this.newSign,
+    required this.std,
   }) : super(
+              newSign: newSign,
+          std: std,
           vsync: vsync,
           gameCategoryType: GameCategoryType.NUMBER_PYRAMID,
           difficultyType: difficultyType,
         ) {
-    startGame();
+    startGame(newSign);
   }
 
   void pyramidBoxSelection(NumPyramidCellModel model) {
@@ -93,7 +98,7 @@ class NumberPyramidProvider extends GameProvider<NumberPyramid> {
 
     if (correctVal.length == currentState.remainingCell) {
       await Future.delayed(Duration(milliseconds: 300));
-      loadNewDataIfRequired();
+      loadNewDataIfRequired(newSign);
       if (timerStatus != TimerStatus.pause) {
         restartTimer();
       }

@@ -18,7 +18,12 @@ import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
+import '../../dashboard/utils.dart';
+
 class DashboardView extends StatefulWidget {
+  final Tuple2<String, String> tuple2;
+
+  const DashboardView({super.key, required this.tuple2});
   @override
   _DashboardViewState createState() => _DashboardViewState();
 }
@@ -32,6 +37,7 @@ class _DashboardViewState extends State<DashboardView>
 
   @override
   void initState() {
+    debugPrint("In dash ${widget.tuple2 == null}");
     super.initState();
     isHomePageOpen = false;
     _controller = AnimationController(
@@ -80,7 +86,7 @@ class _DashboardViewState extends State<DashboardView>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                          CustomBackButton(parentContext: context),
+                        CustomBackButton(parentContext: context),
                         SizedBox(width: 12),
                         Container(
                           decoration: BoxDecoration(
@@ -154,8 +160,6 @@ class _DashboardViewState extends State<DashboardView>
                         ),
                       ),
                     ),
-             
-                   
                   ],
                 ),
                 SizedBox(height: 24),
@@ -182,58 +186,143 @@ class _DashboardViewState extends State<DashboardView>
                               .bodySmall!
                               .copyWith(fontSize: 14),
                         ),
-                        SizedBox(height: 36),
-                        DashboardButtonView(
-                          dashboard: KeyUtil.dashboardItems[0],
-                          position: _offsetLeftEnter,
-                          onTab: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              KeyUtil.home,
-                              ModalRoute.withName(KeyUtil.dashboard),
-                              arguments: Tuple2(KeyUtil.dashboardItems[0],
-                                  MediaQuery.of(context).padding.top),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 20),
-                        DashboardButtonView(
-                          dashboard: KeyUtil.dashboardItems[1],
-                          position: _offsetRightEnter,
-                          onTab: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              KeyUtil.home,
-                              ModalRoute.withName(KeyUtil.dashboard),
-                              arguments: Tuple2(KeyUtil.dashboardItems[1],
-                                  MediaQuery.of(context).padding.top),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 20),
-                        DashboardButtonView(
-                          dashboard: KeyUtil.dashboardItems[2],
-                          position: _offsetLeftEnter,
-                          onTab: () {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              KeyUtil.home,
-                              ModalRoute.withName(KeyUtil.dashboard),
-                              arguments: Tuple2(KeyUtil.dashboardItems[2],
-                                  MediaQuery.of(context).padding.top),
-                            );
-                          },
-                        ),
+                        //cont
+                        decidePuzzleWithStd()
                       ],
                     ),
                   ),
                 ),
-      
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget decidePuzzleWithStd() {
+    Widget item = Container();
+    switch (widget.tuple2.item1) {
+      case level1:
+        item = Column(
+          children: [
+            SizedBox(height: 36),
+            DashboardButtonView(
+              dashboard: KeyUtil.dashboardItems[0],
+              position: _offsetLeftEnter,
+              onTab: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  KeyUtil.home,
+                  ModalRoute.withName(KeyUtil.dashboard),
+                  arguments: Tuple4(
+                      KeyUtil.dashboardItems[0],
+                      MediaQuery.of(context).padding.top,
+                      widget.tuple2.item1,
+                      widget.tuple2.item2),
+                );
+              },
+            ),
+          ],
+        );
+        break;
+      case level2:
+        item = Column(
+          children: [
+            SizedBox(height: 36),
+            DashboardButtonView(
+              dashboard: KeyUtil.dashboardItems[0],
+              position: _offsetLeftEnter,
+              onTab: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  KeyUtil.home,
+                  ModalRoute.withName(KeyUtil.dashboard),
+                  arguments: Tuple4(
+                      KeyUtil.dashboardItems[0],
+                      MediaQuery.of(context).padding.top,
+                      widget.tuple2.item1,
+                      widget.tuple2.item2),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            DashboardButtonView(
+              dashboard: KeyUtil.dashboardItems[1],
+              position: _offsetRightEnter,
+              onTab: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  KeyUtil.home,
+                  ModalRoute.withName(KeyUtil.dashboard),
+                  arguments: Tuple4(
+                      KeyUtil.dashboardItems[1],
+                      MediaQuery.of(context).padding.top,
+                      widget.tuple2.item1,
+                      widget.tuple2.item2),
+                );
+              },
+            ),
+          ],
+        );
+        break;
+      default:
+        item = Column(
+          children: [
+            SizedBox(height: 36),
+            DashboardButtonView(
+              dashboard: KeyUtil.dashboardItems[0],
+              position: _offsetLeftEnter,
+              onTab: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  KeyUtil.home,
+                  ModalRoute.withName(KeyUtil.dashboard),
+                  arguments: Tuple4(
+                      KeyUtil.dashboardItems[0],
+                      MediaQuery.of(context).padding.top,
+                      widget.tuple2.item1,
+                      widget.tuple2.item2),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            DashboardButtonView(
+              dashboard: KeyUtil.dashboardItems[1],
+              position: _offsetRightEnter,
+              onTab: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  KeyUtil.home,
+                  ModalRoute.withName(KeyUtil.dashboard),
+                  arguments: Tuple4(
+                      KeyUtil.dashboardItems[1],
+                      MediaQuery.of(context).padding.top,
+                      widget.tuple2.item1,
+                      widget.tuple2.item2),
+                );
+              },
+            ),
+            SizedBox(height: 20),
+            DashboardButtonView(
+              dashboard: KeyUtil.dashboardItems[2],
+              position: _offsetLeftEnter,
+              onTab: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  KeyUtil.home,
+                  ModalRoute.withName(KeyUtil.dashboard),
+                  arguments: Tuple4(
+                      KeyUtil.dashboardItems[2],
+                      MediaQuery.of(context).padding.top,
+                      widget.tuple2.item1,
+                      widget.tuple2.item2),
+                );
+              },
+            ),
+          ],
+        );
+    }
+    return item;
   }
 }

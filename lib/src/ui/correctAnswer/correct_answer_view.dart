@@ -15,7 +15,7 @@ import 'package:vsync_provider/vsync_provider.dart';
 import '../common/common_neumorphic_view.dart';
 
 class CorrectAnswerView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const CorrectAnswerView({
     Key? key,
@@ -31,15 +31,19 @@ class CorrectAnswerView extends StatelessWidget {
             create: (context) => CorrectAnswerProvider(
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
+                  newSign: '',
+                  std: '',
                 ))
       ],
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar: CommonAppBar<CorrectAnswerProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<CorrectAnswerProvider>(
+              colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<CorrectAnswerProvider>(
+              newSign: colorTuple.item4,
               gameCategoryType: GameCategoryType.CORRECT_ANSWER,
               child: Container(
                 margin: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -115,7 +119,8 @@ class CorrectAnswerView extends StatelessWidget {
                                           .read<CorrectAnswerProvider>()
                                           .checkResult(e);
                                     },
-                                    colorTuple: colorTuple,
+                                    colorTuple: Tuple2(
+                                        colorTuple.item1, colorTuple.item2),
                                     fontSize: 48,
                                   );
                                 },

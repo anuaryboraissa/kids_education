@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../chat/core/domain/services/auth_service.dart';
+import '../../../chat/injection_container.dart';
 import '../constants/color.dart';
 import '../constants/size.dart';
 import '../models/category.dart';
@@ -16,16 +18,34 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String username = "";
+  getUserLogged() async {
+    getIt
+        .get<AuthService>()
+        .usersDS
+        .getPublicUser(uid: getIt.get<AuthService>().loggedUid.toString())
+        .then((value) {
+      setState(() {
+        username = "${value!.fullName}";
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserLogged();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-          children: const [
-            AppBar(),
-            Body(),
-          ],
-        )
-    );
+        body: Column(
+      children:  [
+        AppBar(username: username,),
+        Body(),
+      ],
+    ));
   }
 }
 
@@ -114,10 +134,10 @@ class CategoryCard extends StatelessWidget {
           ],
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Align(
-              alignment: Alignment.topRight,
+              alignment: Alignment.topCenter,
               child: Image.asset(
                 category.thumbnail,
                 height: kCategoryCardImageSize,
@@ -126,11 +146,13 @@ class CategoryCard extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Text(category.name),
-            Text(
-              "${category.noOfCourses.toString()} courses",
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            Text(category.name == "+"
+                ? "Addition"
+                : category.name == "-"
+                    ? "Subtraction"
+                    : category.name == "*"
+                        ? "Multiplication"
+                        : "Division"),
           ],
         ),
       ),
@@ -141,7 +163,10 @@ class CategoryCard extends StatelessWidget {
 class AppBar extends StatelessWidget {
   const AppBar({
     Key? key,
+    required this.username,
   }) : super(key: key);
+
+  final String username;
 
   @override
   Widget build(BuildContext context) {
@@ -170,8 +195,8 @@ class AppBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Hello,\nAnuary Bora",
-                style: TextStyle(color: AppSettings.white,fontSize: 23),
+                "Hello,\n$username",
+                style: TextStyle(color: AppSettings.white, fontSize: 23),
               ),
               CircleButton(
                 icon: Icons.notifications,

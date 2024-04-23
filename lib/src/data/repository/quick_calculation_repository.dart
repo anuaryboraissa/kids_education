@@ -4,14 +4,14 @@ import 'package:mathgame/src/utility/math_util.dart';
 class QuickCalculationRepository {
   static List<int> listHasCode = <int>[];
 
-  static getQuickCalculationDataList(int level, int noItem) {
+  static getQuickCalculationDataList(int level, int noItem,String newSign) {
     if (level == 1) {
       listHasCode.clear();
     }
     List<QuickCalculation> list = <QuickCalculation>[];
 
     while (list.length < noItem) {
-      MathUtil.generate(level, noItem - list.length)
+      MathUtil.generateGuessSign(level, noItem - list.length)
           .forEach((Expression expression) {
         QuickCalculation quickCalculationQandS;
         if (expression.operator2 == null) {
@@ -38,8 +38,8 @@ class QuickCalculationRepository {
   }
 }
 
-void main() {
-  for (int i = 1; i <= 5; i++) {
-    QuickCalculationRepository.getQuickCalculationDataList(i, 1);
-  }
-}
+// void main() {
+//   for (int i = 1; i <= 5; i++) {
+//     QuickCalculationRepository.getQuickCalculationDataList(i, 1);
+//   }
+// }

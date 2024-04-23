@@ -7,6 +7,7 @@ import 'package:mathgame/src/data/models/score_board.dart';
 import 'package:mathgame/src/core/app_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../dashboard/utils.dart';
 import '../../data/models/game_category.dart';
 
 class DashboardProvider extends ChangeNotifier {
@@ -22,7 +23,19 @@ class DashboardProvider extends ChangeNotifier {
     _overallScore = getOverallScore();
   }
 
-  List<GameCategory> getGameByPuzzleType(PuzzleType puzzleType) {
+  int convertStringStdToInt(String std) {
+    if (std == level1) {
+      return 1;
+    } else if (std == level2) {
+      return 2;
+    } else if (std == level3) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+
+  List<GameCategory> getGameByPuzzleType(PuzzleType puzzleType, String std) {
     _list = <GameCategory>[];
     switch (puzzleType) {
       case PuzzleType.MATH_PUZZLE:
@@ -35,32 +48,36 @@ class DashboardProvider extends ChangeNotifier {
           getScoreboard("calculator"),
           AppAssets.icCalculator,
         ));
-        list.add(GameCategory(
-            2,
-            "Guess the sign?",
-            "sign",
-            GameCategoryType.GUESS_SIGN,
-            KeyUtil.guessSign,
-            getScoreboard("sign"),
-            AppAssets.icGuessTheSign));
-        list.add(GameCategory(
-          5,
-          "Correct answer",
-          "correct_answer",
-          GameCategoryType.CORRECT_ANSWER,
-          KeyUtil.correctAnswer,
-          getScoreboard("correct_answer"),
-          AppAssets.icCorrectAnswer,
-        ));
-        list.add(GameCategory(
-          8,
-          "Quick calculation",
-          "quick_calclation",
-          GameCategoryType.QUICK_CALCULATION,
-          KeyUtil.quickCalculation,
-          getScoreboard("quick_calclation"),
-          AppAssets.icQuickCalculation,
-        ));
+        if (convertStringStdToInt(std) > 1) {
+          list.add(GameCategory(
+              2,
+              "Guess the sign?",
+              "sign",
+              GameCategoryType.GUESS_SIGN,
+              KeyUtil.guessSign,
+              getScoreboard("sign"),
+              AppAssets.icGuessTheSign));
+        }
+        if (convertStringStdToInt(std) > 2) {
+          list.add(GameCategory(
+            5,
+            "Correct answer",
+            "correct_answer",
+            GameCategoryType.CORRECT_ANSWER,
+            KeyUtil.correctAnswer,
+            getScoreboard("correct_answer"),
+            AppAssets.icCorrectAnswer,
+          ));
+          list.add(GameCategory(
+            8,
+            "Quick calculation",
+            "quick_calclation",
+            GameCategoryType.QUICK_CALCULATION,
+            KeyUtil.quickCalculation,
+            getScoreboard("quick_calclation"),
+            AppAssets.icQuickCalculation,
+          ));
+        }
         break;
       case PuzzleType.MEMORY_PUZZLE:
         list.add(GameCategory(
@@ -81,24 +98,26 @@ class DashboardProvider extends ChangeNotifier {
           getScoreboard("square_root"),
           AppAssets.icSquareRoot,
         ));
-        list.add(GameCategory(
-          9,
-          "Math Grid",
-          "math_machine",
-          GameCategoryType.MATH_GRID,
-          KeyUtil.mathGrid,
-          getScoreboard("math_machine"),
-          AppAssets.icMathGrid,
-        ));
-        list.add(GameCategory(
-          4,
-          "Mathematical pairs",
-          "math_pairs",
-          GameCategoryType.MATH_PAIRS,
-          KeyUtil.mathPairs,
-          getScoreboard("math_pairs"),
-          AppAssets.icMathematicalPairs,
-        ));
+        if (convertStringStdToInt(std) > 2) {
+          list.add(GameCategory(
+            9,
+            "Math Grid",
+            "math_machine",
+            GameCategoryType.MATH_GRID,
+            KeyUtil.mathGrid,
+            getScoreboard("math_machine"),
+            AppAssets.icMathGrid,
+          ));
+          list.add(GameCategory(
+            4,
+            "Mathematical pairs",
+            "math_pairs",
+            GameCategoryType.MATH_PAIRS,
+            KeyUtil.mathPairs,
+            getScoreboard("math_pairs"),
+            AppAssets.icMathematicalPairs,
+          ));
+        }
         break;
       case PuzzleType.BRAIN_PUZZLE:
         list.add(GameCategory(
@@ -119,15 +138,17 @@ class DashboardProvider extends ChangeNotifier {
           getScoreboard("picture_puzzle"),
           AppAssets.icPicturePuzzle,
         ));
-        list.add(GameCategory(
-          11,
-          "Number Pyramid",
-          "number_pyramid",
-          GameCategoryType.NUMBER_PYRAMID,
-          KeyUtil.numberPyramid,
-          getScoreboard("number_pyramid"),
-          AppAssets.icNumberPyramid,
-        ));
+        if (convertStringStdToInt(std) == 4) {
+          list.add(GameCategory(
+            11,
+            "Number Pyramid",
+            "number_pyramid",
+            GameCategoryType.NUMBER_PYRAMID,
+            KeyUtil.numberPyramid,
+            getScoreboard("number_pyramid"),
+            AppAssets.icNumberPyramid,
+          ));
+        }
         break;
     }
     return _list;

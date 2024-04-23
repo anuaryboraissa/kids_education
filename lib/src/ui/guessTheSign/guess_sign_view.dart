@@ -14,7 +14,7 @@ import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
 
 class GuessSignView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const GuessSignView({
     Key? key,
@@ -28,6 +28,8 @@ class GuessSignView extends StatelessWidget {
         const VsyncProvider(),
         ChangeNotifierProvider<GuessSignProvider>(
             create: (context) => GuessSignProvider(
+                  newSign: colorTuple.item4,
+                  std: colorTuple.item3,
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
                 ))
@@ -35,10 +37,12 @@ class GuessSignView extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar: CommonAppBar<GuessSignProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<GuessSignProvider>(
+              colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<GuessSignProvider>(
+              newSign: colorTuple.item4,
               gameCategoryType: GameCategoryType.GUESS_SIGN,
               child: Container(
                 margin: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -147,7 +151,8 @@ class GuessSignView extends StatelessWidget {
                                       .read<GuessSignProvider>()
                                       .checkResult(e);
                                 },
-                                colorTuple: colorTuple,
+                                colorTuple:
+                                    Tuple2(colorTuple.item1, colorTuple.item2),
                                 fontSize: 48,
                               );
                             },

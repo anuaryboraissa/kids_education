@@ -8,16 +8,21 @@ class MathPairsProvider extends GameProvider<MathPairs> {
   int first = -1;
   int second = -1;
   final DifficultyType difficultyType;
-
+  final String newSign;
+  final String std;
   MathPairsProvider({
     required TickerProvider vsync,
     required this.difficultyType,
+        required this.newSign,
+    required this.std,
   }) : super(
+              newSign: newSign,
+          std: std,
           vsync: vsync,
           gameCategoryType: GameCategoryType.MATH_PAIRS,
           difficultyType: difficultyType,
         ) {
-    startGame();
+    startGame(newSign);
   }
 
   Future<void> checkResult(Pair mathPair, int index) async {
@@ -36,7 +41,7 @@ class MathPairsProvider extends GameProvider<MathPairs> {
             notifyListeners();
             if (currentState.availableItem == 0) {
               await Future.delayed(Duration(milliseconds: 300));
-              loadNewDataIfRequired();
+              loadNewDataIfRequired(newSign);
               if (timerStatus != TimerStatus.pause) {
                 restartTimer();
               }

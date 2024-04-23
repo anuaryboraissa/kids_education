@@ -7,16 +7,22 @@ import 'package:mathgame/src/core/app_constant.dart';
 class PicturePuzzleProvider extends GameProvider<PicturePuzzle> {
   late String result;
   final DifficultyType difficultyType;
+  final String newSign;
+  final String std;
 
   PicturePuzzleProvider({
     required TickerProvider vsync,
     required this.difficultyType,
+    required this.newSign,
+    required this.std,
   }) : super(
+          newSign: newSign,
+          std: std,
           vsync: vsync,
           gameCategoryType: GameCategoryType.PICTURE_PUZZLE,
           difficultyType: difficultyType,
         ) {
-    startGame();
+    startGame(newSign);
   }
 
   void checkGameResult(String answer) async {
@@ -26,7 +32,7 @@ class PicturePuzzleProvider extends GameProvider<PicturePuzzle> {
       notifyListeners();
       if (int.parse(result) == currentState.answer) {
         await Future.delayed(Duration(milliseconds: 300));
-        loadNewDataIfRequired();
+        loadNewDataIfRequired(newSign);
         if (timerStatus != TimerStatus.pause) {
           restartTimer();
         }

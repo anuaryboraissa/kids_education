@@ -17,7 +17,7 @@ import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
 
 class QuickCalculationView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const QuickCalculationView({
     Key? key,
@@ -31,6 +31,8 @@ class QuickCalculationView extends StatelessWidget {
         const VsyncProvider(),
         ChangeNotifierProvider<QuickCalculationProvider>(
             create: (context) => QuickCalculationProvider(
+                  newSign: colorTuple.item4,
+                  std: colorTuple.item3,
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
                 ))
@@ -38,11 +40,12 @@ class QuickCalculationView extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar:
-              CommonAppBar<QuickCalculationProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<QuickCalculationProvider>(
+              colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<QuickCalculationProvider>(
+              newSign: colorTuple.item4,
               gameCategoryType: GameCategoryType.QUICK_CALCULATION,
               child: Container(
                 margin: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -177,7 +180,8 @@ class QuickCalculationView extends StatelessWidget {
                                           .read<QuickCalculationProvider>()
                                           .checkResult(e);
                                     },
-                                    colorTuple: colorTuple,
+                                    colorTuple: Tuple2(
+                                        colorTuple.item1, colorTuple.item2),
                                   );
                                 }
                               },

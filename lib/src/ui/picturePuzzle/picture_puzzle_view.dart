@@ -16,7 +16,7 @@ import 'package:vsync_provider/vsync_provider.dart';
 import 'package:collection/collection.dart';
 
 class PicturePuzzleView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const PicturePuzzleView({
     Key? key,
@@ -30,17 +30,21 @@ class PicturePuzzleView extends StatelessWidget {
         const VsyncProvider(),
         ChangeNotifierProvider<PicturePuzzleProvider>(
             create: (context) => PicturePuzzleProvider(
+                  std: colorTuple.item3,
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
+                  newSign: colorTuple.item4,
                 ))
       ],
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar: CommonAppBar<PicturePuzzleProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<PicturePuzzleProvider>(
+              colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<PicturePuzzleProvider>(
+              newSign: colorTuple.item4,
               gameCategoryType: GameCategoryType.PICTURE_PUZZLE,
               child: Container(
                 margin: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -68,7 +72,7 @@ class PicturePuzzleView extends StatelessWidget {
                                       return PicturePuzzleButton(
                                         picturePuzzleShape: subList,
                                         shapeColor: colorTuple.item1,
-                                        colorTuple: colorTuple,
+                                        colorTuple: Tuple2(colorTuple.item1, colorTuple.item2),
                                       );
                                     }).toList(),
                                   ),
@@ -123,7 +127,7 @@ class PicturePuzzleView extends StatelessWidget {
                                 } else {
                                   return CommonTextButton(
                                     text: e,
-                                    colorTuple: colorTuple,
+                                    colorTuple: Tuple2(colorTuple.item1, colorTuple.item2),
                                     onTab: () {
                                       context
                                           .read<PicturePuzzleProvider>()

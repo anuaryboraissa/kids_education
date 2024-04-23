@@ -420,8 +420,7 @@ class MathUtil {
     }
     return list;
   }
-
-  static List<Expression> generate(int level, int count) {
+  static List<Expression> generateGuessSign(int level, int count) {
     var list = <Expression>[];
     int min = level == 1 ? 1 : (5 * level) - 5; //1 5 10 15 20 25
     int max = level == 1 ? 10 : (10 * level); //10 20 30 40 50 60
@@ -469,6 +468,57 @@ class MathUtil {
           list.add(expression);
         }
       });
+    }
+    return list;
+  }
+  static List<Expression> generate(int level, int count,String newSign) {
+    var list = <Expression>[];
+    int min = level == 1 ? 1 : (5 * level) - 5; //1 5 10 15 20 25
+    int max = level == 1 ? 10 : (10 * level); //10 20 30 40 50 60
+    while (list.length < count) {
+      // MathUtil.generateRandomSign1(count - list.length).forEach((String sign) {
+        Expression? expression;
+        if (level <= 2) {
+          switch (newSign) {
+            case "+":
+              expression = MathUtil.getPlusSignExp(min, max);
+              break;
+            case "-":
+              expression = MathUtil.getMinusSignExp(min, max);
+              break;
+            case "*":
+              expression = MathUtil.getMultiplySignExp(1, 15);
+              break;
+            case "/":
+              expression = MathUtil.getDivideSignExp(min, max);
+              break;
+          }
+        } else if (level <= 4) {
+          switch (newSign) {
+            case "+":
+              expression = MathUtil.getPlusSignExp(min, max);
+              break;
+            case "-":
+              expression = MathUtil.getMinusSignExp(min, max);
+              break;
+            case "*":
+              expression = MathUtil.getMixExp(1, 15);
+              break;
+            case "/":
+              expression = MathUtil.getDivideSignExp(min, max);
+              break;
+          }
+        } else if (level < 5) {
+          expression = MathUtil.getMixExp(1, 25);
+        } else if (level < 6) {
+          expression = MathUtil.getMixExp(1, 30);
+        } else {
+          expression = MathUtil.getMixExp(1, 50);
+        }
+        if (expression != null && !list.contains(expression)) {
+          list.add(expression);
+        }
+      // });
     }
     return list;
   }

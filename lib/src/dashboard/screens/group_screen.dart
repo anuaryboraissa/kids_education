@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../models/group.dart';
 import '../widgets/group_overview.dart';
+import 'chat_screen.dart';
 
 class GroupScreen extends StatefulWidget {
   const GroupScreen({super.key});
@@ -23,13 +24,13 @@ class _GroupScreenState extends State<GroupScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left:10.0),
+                padding: const EdgeInsets.only(left: 10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Groups',
-                     style: TextStyle(fontSize: 25),
+                      style: TextStyle(fontSize: 25),
                     ),
                     Row(
                       children: [
@@ -51,10 +52,10 @@ class _GroupScreenState extends State<GroupScreen> {
                   ],
                 ),
               ),
-            
               Expanded(
                 child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 10),
                   separatorBuilder: (_, __) {
                     return const SizedBox(
                       height: 10,
@@ -62,7 +63,13 @@ class _GroupScreenState extends State<GroupScreen> {
                   },
                   shrinkWrap: true,
                   itemBuilder: (_, int index) {
-                    return GroupWidget(group: groups[index]);
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ChatScreen(),
+                          ));
+                        },
+                        child: GroupWidget(group: groups[index]));
                   },
                   itemCount: groups.length,
                 ),

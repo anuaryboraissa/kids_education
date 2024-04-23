@@ -8,28 +8,20 @@ import 'package:mathgame/src/ui/dashboard/dashboard_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import "injection_container.dart" as injection_container;
 
+const double kMargin = 16.0;
+const double kPageContentWidth = 600;
+const double kIconSize = 24.0;
+
+final navigatorKey = GlobalKey<NavigatorState>();
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await injection_container.init();
   if (kDebugMode) {
     Animate.restartOnHotReload = true;
   }
 
-
-  // To enable Firebase Crashlytics and Analytics, uncomment the following lines and
-  // the import statements at the top of this file.
-  // See the 'Crashlytics and Analytics' section of the main README.md file for details.
-
-  // try {
-  //   await Firebase.initializeApp(
-  //     options: DefaultFirebaseOptions.currentPlatform,
-  //   );
-  //   firebaseAnalytics = FirebaseAnalytics.instance;
-  //   crashlytics = FirebaseCrashlytics.instance;
-  // } catch (e) {
-  //   debugPrint("Firebase couldn't be initialized: $e");
-  // }
 
 
   final sharedPreferences = await SharedPreferences.getInstance();

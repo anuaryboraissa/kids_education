@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mathgame/src/core/app_constant.dart';
 import 'package:mathgame/src/dashboard/widgets/custom_button.dart';
+import 'package:tuple/tuple.dart';
 
 import '../widgets/custom_back_button.dart';
 
 class DecisionScreen extends StatefulWidget {
-  const DecisionScreen({super.key});
+  const DecisionScreen({super.key, required this.level, required this.op});
+  final String level;
+  final String op;
 
   @override
   State<DecisionScreen> createState() => _DecisionScreenState();
@@ -21,7 +24,11 @@ class _DecisionScreenState extends State<DecisionScreen> {
           CustomButton(
             title: "GAME",
             callback: () {
-              Navigator.of(context).pushNamed(KeyUtil.dashboard);
+              debugPrint("Data: ${widget.level} and op: ${widget.op} ======> ");
+              Navigator.of(context).pushNamed(
+                KeyUtil.dashboard,
+                arguments: Tuple2(widget.level, widget.op),
+              );
             },
           ),
           CustomButton(
@@ -32,7 +39,7 @@ class _DecisionScreenState extends State<DecisionScreen> {
       ),
       body: SafeArea(
           child: Column(
-          //  mainAxisAlignment: MainAxisAlignment.center,
+        //  mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -43,7 +50,7 @@ class _DecisionScreenState extends State<DecisionScreen> {
             child: ListView(
               shrinkWrap: true,
               padding: const EdgeInsets.all(10),
-              children: [ 
+              children: [
                 const SizedBox(
                   height: 10,
                 ),
@@ -51,7 +58,7 @@ class _DecisionScreenState extends State<DecisionScreen> {
                   "What are you want to take ?",
                   style: TextStyle(fontSize: 25),
                 ),
-                 const SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text("""

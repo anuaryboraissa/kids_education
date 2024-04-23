@@ -9,8 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
 class HomeView extends StatefulWidget {
-  final Tuple2<Dashboard, double> tuple2;
+  final Tuple4<Dashboard, double, String, String> tuple2;
+  // final Tuple2<String, String> operationLevel;
 
+  // final Tuple2<Tuple2<Dashboard, double>,Tuple2> args;
   HomeView({
     Key? key,
     required this.tuple2,
@@ -140,7 +142,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         : MediaQuery.of(context).size.height / 4,
                   ),
                   children: Provider.of<DashboardProvider>(context)
-                      .getGameByPuzzleType(widget.tuple2.item1.puzzleType)
+                      .getGameByPuzzleType(
+                          widget.tuple2.item1.puzzleType, widget.tuple2.item3)
                       .map((e) => HomeButtonView(
                           title: e.name,
                           icon: e.icon,
@@ -148,12 +151,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                           colorTuple: widget.tuple2.item1.colorTuple,
                           opacity: widget.tuple2.item1.opacity,
                           onTab: () {
+                            debugPrint("Tapped =====> ");
                             if (!isGamePageOpen) {
                               isGamePageOpen = true;
                               Navigator.pushNamed(
                                 context,
                                 e.routePath,
-                                arguments: widget.tuple2.item1.colorTuple,
+                                arguments: Tuple4(
+                                    widget.tuple2.item1.colorTuple.item1,
+                                    widget.tuple2.item1.colorTuple.item2,
+                                    widget.tuple2.item3,
+                                    widget.tuple2.item4),
                               ).then((value) {
                                 isGamePageOpen = false;
                               });

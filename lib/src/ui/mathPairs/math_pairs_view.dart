@@ -11,7 +11,7 @@ import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
 
 class MathPairsView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const MathPairsView({
     Key? key,
@@ -25,6 +25,8 @@ class MathPairsView extends StatelessWidget {
         const VsyncProvider(),
         ChangeNotifierProvider<MathPairsProvider>(
             create: (context) => MathPairsProvider(
+                   newSign: colorTuple.item4,
+                  std: colorTuple.item3,
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
                 ))
@@ -32,10 +34,12 @@ class MathPairsView extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar: CommonAppBar<MathPairsProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<MathPairsProvider>(colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<MathPairsProvider>(
+                   newSign: colorTuple.item4,
+                  // std: colorTuple.item3,
               gameCategoryType: GameCategoryType.MATH_PAIRS,
               child: Container(
                 margin: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -62,7 +66,7 @@ class MathPairsView extends StatelessWidget {
                                   mathPairs: mathPairsProvider
                                       .currentState.list[index],
                                   index: index,
-                                  colorTuple: colorTuple,
+                                  colorTuple: Tuple2(colorTuple.item1, colorTuple.item2),
                                 );
                               });
                         }),

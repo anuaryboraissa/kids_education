@@ -17,7 +17,7 @@ import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
 
 class MentalArithmeticView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const MentalArithmeticView({
     Key? key,
@@ -31,6 +31,8 @@ class MentalArithmeticView extends StatelessWidget {
         const VsyncProvider(),
         ChangeNotifierProvider<MentalArithmeticProvider>(
             create: (context) => MentalArithmeticProvider(
+                  newSign: colorTuple.item4,
+                  std: colorTuple.item3,
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
                 ))
@@ -38,11 +40,12 @@ class MentalArithmeticView extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar:
-              CommonAppBar<MentalArithmeticProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<MentalArithmeticProvider>(
+              colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<MentalArithmeticProvider>(
+              newSign: colorTuple.item4,
               gameCategoryType: GameCategoryType.MENTAL_ARITHMETIC,
               child: Container(
                 margin: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -140,7 +143,8 @@ class MentalArithmeticView extends StatelessWidget {
                                           .read<MentalArithmeticProvider>()
                                           .checkResult(e);
                                     },
-                                    colorTuple: colorTuple,
+                                    colorTuple: Tuple2(
+                                        colorTuple.item1, colorTuple.item2),
                                   );
                                 }
                               },

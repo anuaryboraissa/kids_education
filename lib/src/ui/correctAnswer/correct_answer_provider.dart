@@ -6,17 +6,23 @@ import 'package:mathgame/src/ui/app/game_provider.dart';
 
 class CorrectAnswerProvider extends GameProvider<CorrectAnswer> {
   late String result;
+  late String newSign;
+  late String std;
   final DifficultyType difficultyType;
 
   CorrectAnswerProvider({
     required TickerProvider vsync,
     required this.difficultyType,
+    required this.newSign,
+    required this.std,
   }) : super(
+          newSign: newSign,
+          std: std,
           vsync: vsync,
           gameCategoryType: GameCategoryType.CORRECT_ANSWER,
           difficultyType: difficultyType,
         ) {
-    startGame();
+    startGame(newSign);
   }
 
   Future<void> checkResult(String answer) async {
@@ -25,7 +31,7 @@ class CorrectAnswerProvider extends GameProvider<CorrectAnswer> {
       notifyListeners();
       if (int.parse(result) == currentState.answer) {
         await Future.delayed(Duration(milliseconds: 300));
-        loadNewDataIfRequired();
+        loadNewDataIfRequired(newSign);
         if (timerStatus != TimerStatus.pause) {
           restartTimer();
         }

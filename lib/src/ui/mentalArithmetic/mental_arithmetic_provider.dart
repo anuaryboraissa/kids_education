@@ -8,16 +8,21 @@ import 'package:mathgame/src/ui/app/game_provider.dart';
 class MentalArithmeticProvider extends GameProvider<MentalArithmetic> {
   late String result;
   final DifficultyType difficultyType;
-
+  final String newSign;
+  final String std;
   MentalArithmeticProvider({
     required TickerProvider vsync,
     required this.difficultyType,
+    required this.newSign,
+    required this.std,
   }) : super(
+          newSign: newSign,
+          std: std,
           vsync: vsync,
           gameCategoryType: GameCategoryType.MENTAL_ARITHMETIC,
           difficultyType: difficultyType,
         ) {
-    startGame();
+    startGame(newSign);
   }
 
   Future<void> checkResult(String answer) async {
@@ -28,7 +33,7 @@ class MentalArithmeticProvider extends GameProvider<MentalArithmetic> {
       notifyListeners();
       if (result != "-" && int.parse(result) == currentState.answer) {
         await Future.delayed(Duration(milliseconds: 300));
-        loadNewDataIfRequired();
+        loadNewDataIfRequired(newSign);
         notifyListeners();
       } else if (result.length == currentState.answer.toString().length) {
         if (currentScore > 0) {

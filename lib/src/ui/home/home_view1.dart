@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
 class HomeView1 extends HookWidget {
-  final Tuple2<Dashboard, double> tuple2;
+  final Tuple4<Dashboard, double, String, String> tuple2;
 
   const HomeView1({Key? key, required this.tuple2}) : super(key: key);
 
@@ -43,7 +43,7 @@ class HomeView1 extends HookWidget {
                       : MediaQuery.of(context).size.height / 4,
                 ),
                 children: Provider.of<DashboardProvider>(context)
-                    .getGameByPuzzleType(tuple2.item1.puzzleType)
+                    .getGameByPuzzleType(tuple2.item1.puzzleType, tuple2.item3)
                     .map((e) => HomeButtonView(
                         title: e.name,
                         icon: e.icon,

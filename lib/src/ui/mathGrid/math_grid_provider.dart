@@ -7,16 +7,21 @@ import 'package:mathgame/src/ui/app/game_provider.dart';
 class MathGridProvider extends GameProvider<MathGrid> {
   int answerIndex = 0;
   final DifficultyType difficultyType;
-
+  final String newSign;
+  final String std;
   MathGridProvider({
+    required this.newSign,
+    required this.std,
     required TickerProvider vsync,
     required this.difficultyType,
   }) : super(
+          newSign: newSign,
+          std: std,
           vsync: vsync,
           gameCategoryType: GameCategoryType.MATH_GRID,
           difficultyType: difficultyType,
         ) {
-    startGame();
+    startGame(newSign);
   }
 
   void checkResult(int index, MathGridCellModel gridModel) {
@@ -52,7 +57,7 @@ class MathGridProvider extends GameProvider<MathGrid> {
           .where((element) => !element.isRemoved)
           .isEmpty) {
         await Future.delayed(Duration(milliseconds: 300));
-        loadNewDataIfRequired();
+        loadNewDataIfRequired(newSign);
         answerIndex = 0;
         if (timerStatus != TimerStatus.pause) {
           restartTimer();

@@ -18,7 +18,7 @@ import 'package:vsync_provider/vsync_provider.dart';
 class MagicTriangleView extends StatelessWidget {
   final double padding = 0;
   final double radius = 30;
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const MagicTriangleView({
     Key? key,
@@ -32,6 +32,8 @@ class MagicTriangleView extends StatelessWidget {
         const VsyncProvider(),
         ChangeNotifierProvider<MagicTriangleProvider>(
             create: (context) => MagicTriangleProvider(
+                     newSign: colorTuple.item4,
+                  std: colorTuple.item3,
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
                 ))
@@ -39,10 +41,12 @@ class MagicTriangleView extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar: CommonAppBar<MagicTriangleProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<MagicTriangleProvider>(colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<MagicTriangleProvider>(
+                     newSign: colorTuple.item4,
+                  // std: colorTuple.item3,
               gameCategoryType: GameCategoryType.MAGIC_TRIANGLE,
               child: Container(
                 margin: EdgeInsets.all(24),
@@ -96,14 +100,14 @@ class MagicTriangleView extends StatelessWidget {
                                           padding: padding,
                                           triangleHeight: constraints.maxWidth,
                                           triangleWidth: constraints.maxWidth,
-                                          colorTuple: colorTuple,
+                                          colorTuple: Tuple2(colorTuple.item1, colorTuple.item2),
                                         )
                                       : Triangle4x4(
                                           radius: radius,
                                           padding: padding,
                                           triangleHeight: constraints.maxWidth,
                                           triangleWidth: constraints.maxWidth,
-                                          colorTuple: colorTuple,
+                                          colorTuple: Tuple2(colorTuple.item1, colorTuple.item2),
                                         );
                                 }),
                           ],
@@ -114,8 +118,8 @@ class MagicTriangleView extends StatelessWidget {
                         selector: (p0, p1) => p1.currentState.is3x3,
                         builder: (context, is3x3, child) {
                           return is3x3
-                              ? TriangleInput3x3(colorTuple: colorTuple)
-                              : TriangleInput4x4(colorTuple: colorTuple);
+                              ? TriangleInput3x3(colorTuple: Tuple2(colorTuple.item1, colorTuple.item2))
+                              : TriangleInput4x4(colorTuple: Tuple2(colorTuple.item1, colorTuple.item2));
                         }),
                   ],
                 ),

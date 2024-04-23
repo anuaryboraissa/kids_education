@@ -15,7 +15,7 @@ import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
 
 class CalculatorView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const CalculatorView({
     Key? key,
@@ -31,15 +31,19 @@ class CalculatorView extends StatelessWidget {
             create: (context) => CalculatorProvider(
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
+                  newSign:  colorTuple.item4,
+                  std: colorTuple.item3,
                 ))
       ],
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar: CommonAppBar<CalculatorProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<CalculatorProvider>(
+              colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<CalculatorProvider>(
+              newSign: colorTuple.item4,
               gameCategoryType: GameCategoryType.CALCULATOR,
               child: Container(
                 margin: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -87,8 +91,7 @@ class CalculatorView extends StatelessWidget {
                                   .textTheme
                                   .titleSmall!
                                   .copyWith(
-                                  fontSize: 30,
-                                  color: colorTuple.item1),
+                                      fontSize: 30, color: colorTuple.item1),
                             );
                           },
                         ),
@@ -146,7 +149,8 @@ class CalculatorView extends StatelessWidget {
                                           .read<CalculatorProvider>()
                                           .checkResult(e);
                                     },
-                                    colorTuple: colorTuple,
+                                    colorTuple: Tuple2(
+                                        colorTuple.item1, colorTuple.item2),
                                   );
                                 }
                               },

@@ -11,7 +11,7 @@ import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
 
 class MathGridView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const MathGridView({
     Key? key,
@@ -25,6 +25,8 @@ class MathGridView extends StatelessWidget {
         const VsyncProvider(),
         ChangeNotifierProvider<MathGridProvider>(
             create: (context) => MathGridProvider(
+                    newSign: colorTuple.item4,
+                  std: colorTuple.item3,
                   vsync: VsyncProvider.of(context),
                   difficultyType: context.read<ThemeProvider>().difficultyType,
                 ))
@@ -32,10 +34,12 @@ class MathGridView extends StatelessWidget {
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar: CommonAppBar<MathGridProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<MathGridProvider>(colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<MathGridProvider>(
+                        newSign: colorTuple.item4,
+                  // std: colorTuple.item3,
               gameCategoryType: GameCategoryType.MATH_GRID,
               child: Container(
                 margin: EdgeInsets.all(24),
@@ -95,7 +99,7 @@ class MathGridView extends StatelessWidget {
                                     gridModel: listForSquare
                                         .currentState.listForSquare[index],
                                     index: index,
-                                    colorTuple: colorTuple,
+                                    colorTuple: Tuple2(colorTuple.item1, colorTuple.item2),
                                   );
                                 });
                           }),

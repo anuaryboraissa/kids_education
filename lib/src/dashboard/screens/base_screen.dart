@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../chat/features/chat/presentation/screens/realtime_chat_screen/realtime_chat_screen.dart';
+import '../../../chat/features/chat/presentation/screens/realtime_conversations_screen/realtime_conversations_screen.dart';
 import '../constants/color.dart';
 import 'details_screen.dart';
 import 'group_screen.dart';
@@ -24,7 +26,7 @@ class _BaseScreenState extends State<BaseScreen> {
     LevelScreen(
       operation: '',
     ),
-    GroupScreen(),
+    RealtimeConversationsScreen(),
     SettingScreen()
   ];
   @override

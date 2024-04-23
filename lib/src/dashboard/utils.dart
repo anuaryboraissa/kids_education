@@ -26,3 +26,16 @@ shortString(String str, [amount = 2, trailingDot = false]) {
         (trailingDot && str.length > amount ? "..." : "");
   }
 }
+
+//operations
+const String additionOperation="+";
+const String subtractionOperation="-";
+const String multiplicationOperation="*";
+const String divisionOperation="/";
+
+//levels
+
+const String level1="STD1";
+const String level2="STD2";
+const String level3="STD3";
+const String level4="STD4";

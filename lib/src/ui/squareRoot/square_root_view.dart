@@ -14,7 +14,7 @@ import 'package:tuple/tuple.dart';
 import 'package:vsync_provider/vsync_provider.dart';
 
 class SquareRootView extends StatelessWidget {
-  final Tuple2<Color, Color> colorTuple;
+  final Tuple4<Color, Color, String, String> colorTuple;
 
   const SquareRootView({
     Key? key,
@@ -28,17 +28,20 @@ class SquareRootView extends StatelessWidget {
         const VsyncProvider(),
         ChangeNotifierProvider<SquareRootProvider>(
             create: (context) => SquareRootProvider(
-                  vsync: VsyncProvider.of(context),
-                  difficultyType: context.read<ThemeProvider>().difficultyType,
-                ))
+                vsync: VsyncProvider.of(context),
+                difficultyType: context.read<ThemeProvider>().difficultyType,
+                newSign: colorTuple.item4,
+                std: colorTuple.item3))
       ],
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
-          appBar: CommonAppBar<SquareRootProvider>(colorTuple: colorTuple),
+          appBar: CommonAppBar<SquareRootProvider>(
+              colorTuple: Tuple2(colorTuple.item1, colorTuple.item2)),
           body: SafeArea(
             bottom: true,
             child: DialogListener<SquareRootProvider>(
+              newSign: colorTuple.item4,
               gameCategoryType: GameCategoryType.SQUARE_ROOT,
               child: Container(
                 margin: EdgeInsets.only(top: 24, left: 24, right: 24),
@@ -98,7 +101,8 @@ class SquareRootView extends StatelessWidget {
                                         .read<SquareRootProvider>()
                                         .checkResult(e);
                                   },
-                                  colorTuple: colorTuple,
+                                  colorTuple: Tuple2(
+                                      colorTuple.item1, colorTuple.item2),
                                   fontSize: 48,
                                 );
                               },

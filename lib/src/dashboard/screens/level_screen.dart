@@ -84,8 +84,9 @@ class _LevelScreenState extends State<LevelScreen> {
                     Level level = levels[index];
                     return GestureDetector(
                       onTap: () {
+                        debugPrint("OP: ${widget.operation}      ========>  ");
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DecisionScreen(),
+                          builder: (context) =>  DecisionScreen(level: level.icon, op: widget.operation,),
                         ));
                       },
                       child: CustomCard(
